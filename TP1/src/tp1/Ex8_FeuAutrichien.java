@@ -16,6 +16,7 @@ import java.awt.Color;
  * @author 21301646
  */
 public class Ex8_FeuAutrichien extends javax.swing.JFrame {
+
     private static final int DELAY_RED = 2000;
     private static final int DELAY_ORANGE = 1000;
     private static final int DELAY_GREEN = 3000;
@@ -25,7 +26,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     private static final int DELAY_GREENON = 1000;
     private static final int DELAY_GREENOFF = 500;
     private static final int NB_FLASHES = 3;
-    
+
     private Timer timerRed;
     private Timer timerOrange;
     private Timer timerGreen;
@@ -34,13 +35,13 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     private Timer timerRedOrange;
     private Timer timerGreenOn;
     private Timer timerGreenOff;
-    
+
     private int counter;
-    
-    public enum State{
-        OFF,RED,REDORANGE,GREEN,ORANGE,FAILON,FAILOFF,GREENOFF,GREENON
+
+    public enum State {
+        OFF, RED, REDORANGE, GREEN, ORANGE, FAILON, FAILOFF, GREENOFF, GREENON
     }
-    
+
     State state;
 
     /**
@@ -50,8 +51,8 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
         initComponents();
         init();
     }
-    
-    private void initTimers(){
+
+    private void initTimers() {
         timerRed = new Timer(DELAY_RED, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,93 +102,93 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void counterAdd(){
+
+    private void counterAdd() {
         counter++;
     }
-    
-    private void resetCounter(){
+
+    private void resetCounter() {
         counter = 0;
     }
-    
-    private void showRed(){
-        Utils.stopTimers(timerOrange,timerGreen,timerFailOn,timerFailOff,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showRed() {
+        Utils.stopTimers(timerOrange, timerGreen, timerFailOn, timerFailOff, timerRedOrange, timerGreenOn, timerGreenOff);
         timerRed.start();
-        Utils.activate(stopButton,failButton);
+        Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
         Light.turnOn(red);
         Light.turnOff(orange, green);
     }
-    
-    private void showGreen(){
-        Utils.stopTimers(timerOrange,timerRed,timerFailOn,timerFailOff,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showGreen() {
+        Utils.stopTimers(timerOrange, timerRed, timerFailOn, timerFailOff, timerRedOrange, timerGreenOn, timerGreenOff);
         timerGreen.start();
-        Utils.activate(stopButton,failButton);
+        Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
         Light.turnOn(green);
         Light.turnOff(orange, red);
     }
-    
-    private void showRedOrange(){
-        Utils.stopTimers(timerOrange, timerRed, timerFailOn, timerFailOff, timerGreen,timerGreenOn,timerGreenOff);
+
+    private void showRedOrange() {
+        Utils.stopTimers(timerOrange, timerRed, timerFailOn, timerFailOff, timerGreen, timerGreenOn, timerGreenOff);
         timerRedOrange.start();
         Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
         Light.turnOn(red, orange);
         Light.turnOff(green);
     }
-    
-    private void showOrange(){
-        Utils.stopTimers(timerGreen,timerRed,timerFailOn,timerFailOff,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showOrange() {
+        Utils.stopTimers(timerGreen, timerRed, timerFailOn, timerFailOff, timerRedOrange, timerGreenOn, timerGreenOff);
         timerOrange.start();
-        Utils.activate(stopButton,failButton);
+        Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
         Light.turnOn(orange);
         Light.turnOff(green, red);
     }
-    
-    private void showFailOn(){
-        Utils.stopTimers(timerOrange,timerRed,timerGreen,timerFailOff,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showFailOn() {
+        Utils.stopTimers(timerOrange, timerRed, timerGreen, timerFailOff, timerRedOrange, timerGreenOn, timerGreenOff);
         timerFailOn.start();
-        Utils.activate(stopButton,startButton);
+        Utils.activate(stopButton, startButton);
         Utils.deactivate(failButton);
         Light.turnOn(orange);
         Light.turnOff(green, red);
     }
-    
-    private void showFailOff(){
-        Utils.stopTimers(timerOrange,timerRed,timerGreen,timerFailOn,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showFailOff() {
+        Utils.stopTimers(timerOrange, timerRed, timerGreen, timerFailOn, timerRedOrange, timerGreenOn, timerGreenOff);
         timerFailOff.start();
-        Utils.activate(stopButton,startButton);
+        Utils.activate(stopButton, startButton);
         Utils.deactivate(failButton);
         Light.turnOff(green, red, orange);
     }
-    
-    private void showOff(){
-        Utils.stopTimers(timerRed,timerOrange,timerGreen,timerFailOn,timerFailOff,timerRedOrange,timerGreenOn,timerGreenOff);
+
+    private void showOff() {
+        Utils.stopTimers(timerRed, timerOrange, timerGreen, timerFailOn, timerFailOff, timerRedOrange, timerGreenOn, timerGreenOff);
         Utils.activate(startButton);
-        Utils.deactivate(stopButton,failButton);
+        Utils.deactivate(stopButton, failButton);
         Light.turnOff(green, red, orange);
     }
-    
-    private void showGreenOff(){
-        Utils.stopTimers(timerRed,timerRedOrange,timerGreen,timerGreenOn,timerOrange);
+
+    private void showGreenOff() {
+        Utils.stopTimers(timerRed, timerRedOrange, timerGreen, timerGreenOn, timerOrange);
         timerGreenOff.start();
-        Utils.activate(stopButton,failButton);
+        Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
-        Light.turnOff(green,red,orange);
+        Light.turnOff(green, red, orange);
     }
-    
-    private void showGreenOn(){
-        Utils.stopTimers(timerRed,timerRedOrange,timerGreen,timerGreenOff,timerOrange);
+
+    private void showGreenOn() {
+        Utils.stopTimers(timerRed, timerRedOrange, timerGreen, timerGreenOff, timerOrange);
         timerGreenOn.start();
-        Utils.activate(stopButton,failButton);
+        Utils.activate(stopButton, failButton);
         Utils.deactivate(startButton);
-        Light.turnOff(red,orange);
+        Light.turnOff(red, orange);
         Light.turnOn(green);
     }
-    
-    private void init(){
+
+    private void init() {
         resetCounter();
         initTimers();
         state = State.OFF;
@@ -253,7 +254,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        switch(state){
+        switch (state) {
             case OFF:
                 state = State.RED;
                 showRed();
@@ -278,7 +279,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        switch(state){
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED:
@@ -307,7 +308,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void failButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failButtonActionPerformed
-        switch(state){
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED:
@@ -331,8 +332,8 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_failButtonActionPerformed
 
-    private void tickTimerRed(){
-        switch(state){
+    private void tickTimerRed() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED:
@@ -351,9 +352,9 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerRedOrange(){
-        switch(state){
+
+    private void tickTimerRedOrange() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -372,9 +373,9 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerGreen(){
-        switch(state){
+
+    private void tickTimerGreen() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -394,9 +395,9 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerGreenOff(){
-        switch(state){
+
+    private void tickTimerGreenOff() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -412,23 +413,23 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
             case REDORANGE://Forbidden
                 break;
             case GREENOFF:
-                if(counter<NB_FLASHES){
+                if (counter < NB_FLASHES) {
                     state = State.GREENON;
                     showGreenOn();
-                    counterAdd(); 
-                }else{
+                    counterAdd();
+                } else {
                     state = State.ORANGE;
                     showOrange();
                 }
                 break;
             case GREENON://Forbidden
                 break;
-                
+
         }
     }
-    
-    private void tickTimerGreenOn(){
-        switch(state){
+
+    private void tickTimerGreenOn() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -449,12 +450,12 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 state = State.GREENOFF;
                 showGreenOff();
                 break;
-                
+
         }
     }
-    
-    private void tickTimerOrange(){
-        switch(state){
+
+    private void tickTimerOrange() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -473,9 +474,9 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerFailOn(){
-        switch(state){
+
+    private void tickTimerFailOn() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -494,9 +495,9 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerFailOff(){
-        switch(state){
+
+    private void tickTimerFailOff() {
+        switch (state) {
             case OFF://Forbidden
                 break;
             case RED://Forbidden
@@ -515,7 +516,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

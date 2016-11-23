@@ -10,26 +10,26 @@ import Utils.Utils;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author 21301646
  */
 public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
+
     private static final int NB_MIN = 0;
     private static final int NB_MAX = 15;
     private static final int DUREE_AVANCE = 1000;
     private static final int DUREE_RECULE = 200;
-    public enum Etat{
+
+    public enum Etat {
         AVANCE, RECULE, ARRET
     }
-    
+
     private Timer timerAvance;
     private Timer timerRecule;
-    
+
     private int cpt;
     private Etat etat;
-    
 
     /**
      * Creates new form Ex3
@@ -38,8 +38,8 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
         initComponents();
         init();
     }
-    
-    private void init(){        
+
+    private void init() {
         timerAvance = new Timer(DUREE_AVANCE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,45 +57,45 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
         presentationArret();
         afficherCpt();
     }
-    
-    private void presentationAvance(){
+
+    private void presentationAvance() {
         timerRecule.stop();
         timerAvance.start();
-        Utils.activate(reculeButton,stopButton);
-        Utils.deactivate(avanceButton,startButton);
+        Utils.activate(reculeButton, stopButton);
+        Utils.deactivate(avanceButton, startButton);
     }
-    
-    private void presentationRecule(){
+
+    private void presentationRecule() {
         timerRecule.start();
         timerAvance.stop();
-        Utils.activate(avanceButton,stopButton);
-        Utils.deactivate(reculeButton,startButton);
+        Utils.activate(avanceButton, stopButton);
+        Utils.deactivate(reculeButton, startButton);
     }
-    
-    private void presentationArret(){
+
+    private void presentationArret() {
         timerAvance.stop();
         timerRecule.stop();
         Utils.activate(startButton);
-        Utils.deactivate(avanceButton,reculeButton,stopButton);
+        Utils.deactivate(avanceButton, reculeButton, stopButton);
     }
-    
-    private void incrementeCpt(){
+
+    private void incrementeCpt() {
         cpt++;
     }
-    
-    private void decrementeCpt(){
+
+    private void decrementeCpt() {
         cpt--;
     }
-    
-    private void afficherCpt(){
-        affichageCompteur.setText(""+cpt);        
+
+    private void afficherCpt() {
+        affichageCompteur.setText("" + cpt);
     }
-    
-    private void afficherPouf(){
-        affichageCompteur.setText("Pouf");        
+
+    private void afficherPouf() {
+        affichageCompteur.setText("Pouf");
     }
-    
-    private void resetCpt(){
+
+    private void resetCpt() {
         cpt = NB_MIN;
     }
 
@@ -163,7 +163,7 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET:
                 etat = Etat.AVANCE;
                 presentationAvance();
@@ -177,7 +177,7 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case AVANCE:
@@ -196,7 +196,7 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void avanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avanceButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case AVANCE: // interdit
@@ -209,7 +209,7 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
     }//GEN-LAST:event_avanceButtonActionPerformed
 
     private void reculeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reculeButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case RECULE: // interdit
@@ -221,17 +221,17 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_reculeButtonActionPerformed
 
-    private void tickTimerAvance(){
-        switch(etat){
+    private void tickTimerAvance() {
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case AVANCE:
-                if(cpt<NB_MAX){
+                if (cpt < NB_MAX) {
                     etat = Etat.AVANCE;
                     presentationAvance();
                     incrementeCpt();
                     afficherCpt();
-                }else{
+                } else {
                     etat = Etat.ARRET;
                     presentationArret();
                     resetCpt();
@@ -241,18 +241,18 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void tickTimerRecule(){
-        switch(etat){
+
+    private void tickTimerRecule() {
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case RECULE:
-                if(cpt>NB_MIN){
+                if (cpt > NB_MIN) {
                     etat = Etat.RECULE;
                     presentationRecule();
                     decrementeCpt();
                     afficherCpt();
-                }else{
+                } else {
                     etat = Etat.ARRET;
                     presentationArret();
                     resetCpt();
@@ -262,7 +262,7 @@ public class Ex5_CompteurAvanceRecule extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */

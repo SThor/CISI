@@ -9,7 +9,6 @@ import javax.swing.Timer;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author 21301646
@@ -17,15 +16,15 @@ import javax.swing.Timer;
 public class Ex4_CompteurTimer extends javax.swing.JFrame {
 
     private static final int NB_MAX = 15;
-    private enum Etat{
+
+    private enum Etat {
         MARCHE, ARRET
     }
-    
+
     private Timer timer;
-    
+
     private int cpt;
     private Etat etat;
-    
 
     /**
      * Creates new form Ex3
@@ -34,9 +33,9 @@ public class Ex4_CompteurTimer extends javax.swing.JFrame {
         initComponents();
         init();
     }
-    
-    private void init(){
-        
+
+    private void init() {
+
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,32 +47,32 @@ public class Ex4_CompteurTimer extends javax.swing.JFrame {
         presentationArret();
         afficherCpt();
     }
-    
-    private void presentationMarche(){
+
+    private void presentationMarche() {
         timer.start();
         startButton.setEnabled(false);
         stopButton.setEnabled(true);
     }
-    
-    private void afficherCpt(){
-        affichageCompteur.setText(""+cpt);        
+
+    private void afficherCpt() {
+        affichageCompteur.setText("" + cpt);
     }
-    
-    private void afficherPouf(){
-        affichageCompteur.setText("Pouf");        
+
+    private void afficherPouf() {
+        affichageCompteur.setText("Pouf");
     }
-    
-    private void presentationArret(){
+
+    private void presentationArret() {
         timer.stop();
         startButton.setEnabled(true);
         stopButton.setEnabled(false);
     }
-    
-    private void resetCpt(){
+
+    private void resetCpt() {
         cpt = 0;
     }
-    
-    private void incrementeCpt(){
+
+    private void incrementeCpt() {
         cpt++;
     }
 
@@ -123,7 +122,7 @@ public class Ex4_CompteurTimer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET:
                 etat = Etat.MARCHE;
                 presentationMarche();
@@ -135,7 +134,7 @@ public class Ex4_CompteurTimer extends javax.swing.JFrame {
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        switch(etat){
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case MARCHE:
@@ -147,27 +146,27 @@ public class Ex4_CompteurTimer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_stopButtonActionPerformed
 
-    private void tickTimer(){
-        switch(etat){
+    private void tickTimer() {
+        switch (etat) {
             case ARRET: // interdit
                 break;
             case MARCHE:
-                if(cpt<NB_MAX){
+                if (cpt < NB_MAX) {
                     etat = Etat.MARCHE;
                     presentationMarche();
                     incrementeCpt();
                     afficherCpt();
-                }else{
+                } else {
                     etat = Etat.ARRET;
                     presentationArret();
                     resetCpt();
                     afficherPouf();
                 }
-                
+
                 break;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
