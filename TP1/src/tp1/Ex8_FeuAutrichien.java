@@ -25,7 +25,7 @@ public class Ex8_FeuAutrichien extends javax.swing.JFrame {
     private static final int DELAY_REDORANGE = 1000;
     private static final int DELAY_GREENON = 1000;
     private static final int DELAY_GREENOFF = 500;
-    private static final int NB_FLASHES = 3;
+    private static final int NB_FLASHES = 5;
 
     private Timer timerRed;
     private Timer timerOrange;

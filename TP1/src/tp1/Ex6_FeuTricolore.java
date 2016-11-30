@@ -23,7 +23,7 @@ public class Ex6_FeuTricolore extends javax.swing.JFrame {
     private static final int DELAY_FAILON = 1500;
     private static final int DELAY_FAILOFF = 500;
 
-    private Timer timerRed;
+    private Timer timerRed = new Timer(DELAY_RED, this::tickTimerRed);
     private Timer timerOrange;
     private Timer timerGreen;
     private Timer timerFailOn;
@@ -44,12 +44,7 @@ public class Ex6_FeuTricolore extends javax.swing.JFrame {
     }
 
     private void initTimers() {
-        timerRed = new Timer(DELAY_RED, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tickTimerRed();
-            }
-        });
+        
         timerOrange = new Timer(DELAY_ORANGE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -264,7 +259,7 @@ public class Ex6_FeuTricolore extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_failButtonActionPerformed
 
-    private void tickTimerRed() {
+    private void tickTimerRed(java.awt.event.ActionEvent evt) {
         switch (state) {
             case OFF://Forbidden
                 break;
