@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  *
  * @author 21301646
  */
-public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
+public class PanelEx10PolyLines extends javax.swing.JPanel {
 
     private List<Point> workingPolyline = new ArrayList<>();
     private List<List<Point>> polylines = new ArrayList<>();
@@ -59,7 +59,7 @@ public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
     /**
      * Creates new form Panel_Ex9_RubberBanding
      */
-    public Panel_Ex10_ComplexDrawing() {
+    public PanelEx10PolyLines() {
         initComponents();
         init();
     }

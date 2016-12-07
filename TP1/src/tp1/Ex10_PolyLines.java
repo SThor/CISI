@@ -9,12 +9,12 @@ package tp1;
  *
  * @author 21301646
  */
-public class Ex10_ComplexDrawing extends javax.swing.JFrame {
+public class Ex10_PolyLines extends javax.swing.JFrame {
 
     /**
      * Creates new form Ex10_ComplexDrawing
      */
-    public Ex10_ComplexDrawing() {
+    public Ex10_PolyLines() {
         initComponents();
         setFocusable(false);
     }
@@ -28,7 +28,7 @@ public class Ex10_ComplexDrawing extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_Ex10_ComplexDrawing1 = new tp1.Panel_Ex10_ComplexDrawing();
+        panel_Ex10_ComplexDrawing1 = new tp1.PanelEx10PolyLines();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Polylines");
@@ -77,25 +77,26 @@ public class Ex10_ComplexDrawing extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Ex10_ComplexDrawing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex10_PolyLines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Ex10_ComplexDrawing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex10_PolyLines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Ex10_ComplexDrawing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex10_PolyLines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Ex10_ComplexDrawing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex10_PolyLines.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ex10_ComplexDrawing().setVisible(true);
+                new Ex10_PolyLines().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private tp1.Panel_Ex10_ComplexDrawing panel_Ex10_ComplexDrawing1;
+    private tp1.PanelEx10PolyLines panel_Ex10_ComplexDrawing1;
     // End of variables declaration//GEN-END:variables
 }

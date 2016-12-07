@@ -34,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="tp1.Panel_Ex10_ComplexDrawing" name="panel_Ex10_ComplexDrawing1">
+    <Container class="tp1.PanelEx10PolyLines" name="panel_Ex10_ComplexDrawing1">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="panel_Ex10_ComplexDrawing1.setFocusable(true);"/>
       </AuxValues>

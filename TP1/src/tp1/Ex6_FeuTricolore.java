@@ -5,6 +5,7 @@
  */
 package tp1;
 
+import Elements.Light;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -138,9 +139,9 @@ public class Ex6_FeuTricolore extends javax.swing.JFrame {
     private void initComponents() {
 
         lightsPanel = new javax.swing.JPanel();
-        red = new tp1.Light(Color.RED);
-        orange = new tp1.Light(Color.ORANGE);
-        green = new tp1.Light(Color.GREEN);
+        red = new Elements.Light(Color.RED);
+        orange = new Elements.Light(Color.ORANGE);
+        green = new Elements.Light(Color.GREEN);
         buttonsPanel = new javax.swing.JPanel();
         startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
@@ -395,10 +396,10 @@ public class Ex6_FeuTricolore extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton failButton;
-    private tp1.Light green;
+    private Elements.Light green;
     private javax.swing.JPanel lightsPanel;
-    private tp1.Light orange;
-    private tp1.Light red;
+    private Elements.Light orange;
+    private Elements.Light red;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables

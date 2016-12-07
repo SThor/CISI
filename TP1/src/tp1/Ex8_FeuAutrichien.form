@@ -37,23 +37,23 @@
         <Property name="rows" type="int" value="3"/>
       </Layout>
       <SubComponents>
-        <Container class="tp1.Light" name="red">
+        <Container class="Elements.Light" name="red">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new tp1.Light(Color.RED)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Elements.Light(Color.RED)"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
-        <Container class="tp1.Light" name="orange">
+        <Container class="Elements.Light" name="orange">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new tp1.Light(Color.ORANGE)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Elements.Light(Color.ORANGE)"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
         </Container>
-        <Container class="tp1.Light" name="green">
+        <Container class="Elements.Light" name="green">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new tp1.Light(Color.GREEN)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new Elements.Light(Color.GREEN)"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
