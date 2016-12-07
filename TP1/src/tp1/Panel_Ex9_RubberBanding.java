@@ -10,19 +10,27 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author 21301646
  */
 public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
-    private int xi;
-    private int yi;
     private Point origin;
     private Point current;
+    private List<Point> starts = new ArrayList<>();
+    private List<Point> ends = new ArrayList<>();
     private boolean drawing;
     private Graphics2D g2;
+    private final static Color WORKING_COLOR = Color.RED;
     private final static Color COLOR = Color.BLACK;
+
+    private void draw(Point start, Point end) {
+        starts.add(start);
+        ends.add(end);
+    }
     
     private enum State{
         INIT, DRAW
@@ -48,8 +56,15 @@ public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
         g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if(drawing){
-            g2.setColor(COLOR);
+            g2.setColor(WORKING_COLOR);
             g2.drawLine(origin.x, origin.y, current.x, current.y);            
+        }
+        for (int i = 0; i < starts.size(); i++) {
+            Point start = starts.get(i);
+            Point end = ends.get(i);
+            g2.setColor(COLOR);
+            g2.drawLine(start.x, start.y, end.x, end.y);    
+            
         }
     }
     
@@ -110,6 +125,7 @@ public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
             case DRAW:
                 state = State.INIT;
                 drawing = false;
+                draw(origin,current);
                 break;
         }
     }//GEN-LAST:event_formMouseReleased

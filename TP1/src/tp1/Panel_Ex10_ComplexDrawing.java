@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,8 +19,8 @@ import java.util.List;
  * @author 21301646
  */
 public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
-    private List<Point> workingPolyline;
-    private List<List<Point>> polylines;
+    private List<Point> workingPolyline = new ArrayList<>();
+    private List<List<Point>> polylines = new ArrayList<>();
     private Point workingPoint;
     
     private boolean drawing;
