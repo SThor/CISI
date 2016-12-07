@@ -27,9 +27,10 @@ public class Ex9_RubberBanding extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_Ex9_RubberBanding1 = new tp1.Panel_Ex9_RubberBanding();
+        panel_Ex9_RubberBanding1 = new tp1.PanelEx9RubberBanding();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("RubberBanding");
 
         javax.swing.GroupLayout panel_Ex9_RubberBanding1Layout = new javax.swing.GroupLayout(panel_Ex9_RubberBanding1);
         panel_Ex9_RubberBanding1.setLayout(panel_Ex9_RubberBanding1Layout);
@@ -92,6 +93,6 @@ public class Ex9_RubberBanding extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private tp1.Panel_Ex9_RubberBanding panel_Ex9_RubberBanding1;
+    private tp1.PanelEx9RubberBanding panel_Ex9_RubberBanding1;
     // End of variables declaration//GEN-END:variables
 }

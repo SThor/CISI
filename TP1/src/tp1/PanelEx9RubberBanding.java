@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author 21301646
  */
-public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
+public class PanelEx9RubberBanding extends javax.swing.JPanel {
     private Point origin;
     private Point current;
     private List<Point> starts = new ArrayList<>();
@@ -26,11 +26,6 @@ public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
     private Graphics2D g2;
     private final static Color WORKING_COLOR = Color.RED;
     private final static Color COLOR = Color.BLACK;
-
-    private void draw(Point start, Point end) {
-        starts.add(start);
-        ends.add(end);
-    }
     
     private enum State{
         INIT, DRAW
@@ -41,13 +36,18 @@ public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
     /**
      * Creates new form Panel_Ex9_RubberBanding
      */
-    public Panel_Ex9_RubberBanding() {
+    public PanelEx9RubberBanding() {
         initComponents();
         init();
     }
     
     private void init(){
         state = State.INIT;
+    }
+
+    private void saveLine(Point start, Point end) {
+        starts.add(start);
+        ends.add(end);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class Panel_Ex9_RubberBanding extends javax.swing.JPanel {
             case DRAW:
                 state = State.INIT;
                 drawing = false;
-                draw(origin,current);
+                saveLine(origin,current);
                 break;
         }
     }//GEN-LAST:event_formMouseReleased

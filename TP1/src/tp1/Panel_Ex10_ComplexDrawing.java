@@ -13,26 +13,47 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author 21301646
  */
 public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
+
     private List<Point> workingPolyline = new ArrayList<>();
     private List<List<Point>> polylines = new ArrayList<>();
     private Point workingPoint;
-    
-    private boolean drawing;
+
     private Graphics2D g2;
     private final static Color FINAL_COLOR = Color.BLACK;
-    private final static Color WORKING_POLY_COLOR = Color.GRAY;
+    private final static Color WORKING_POLY_COLOR = Color.BLUE;
     private final static Color WORKING_LINE_COLOR = Color.RED;
-    
-    private enum State{
+    private int n;
+    private boolean drawPolys;
+    private boolean drawTempLine;
+
+    private void addPoint(Point point) {
+        workingPolyline.add(point);
+    }
+
+    private void deleteLastPoint() {
+        workingPolyline.remove(workingPolyline.size() - 1);
+    }
+
+    private void savePolyline() {
+        List<Point> newPolyline = new ArrayList<>();
+        for (Point point : workingPolyline) {
+            newPolyline.add(point);
+        }
+        polylines.add(newPolyline);
+        workingPolyline.clear();
+    }
+
+    private enum State {
         INIT, UNI, POLY
     }
-    
+
     private State state;
 
     /**
@@ -42,9 +63,10 @@ public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
         initComponents();
         init();
     }
-    
-    private void init(){
+
+    private void init() {
         state = State.INIT;
+        n = 0;
     }
 
     @Override
@@ -52,30 +74,33 @@ public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
         super.paintComponent(g);
         g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        g2.setColor(FINAL_COLOR);
-        for (List<Point> polyline : polylines) {
-            for (int i = 0; i < polyline.size(); i++) {
-                Point p1 = polyline.get(i);
-                Point p2 = polyline.get(i+1);
-                g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+
+        if (drawPolys) {
+            g2.setColor(FINAL_COLOR);
+            for (List<Point> polyline : polylines) {
+                for (int i = 0; i < polyline.size() - 1; i++) {
+                    Point p1 = polyline.get(i);
+                    Point p2 = polyline.get(i + 1);
+                    g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+                }
+            }
+            if (!workingPolyline.isEmpty()) {
+                g2.setColor(WORKING_POLY_COLOR);
+                for (int i = 0; i < workingPolyline.size() - 1; i++) {
+                    Point p1 = workingPolyline.get(i);
+                    Point p2 = workingPolyline.get(i + 1);
+                    g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+                }
             }
         }
-        
-        g2.setColor(WORKING_POLY_COLOR);
-        for (int i = 0; i < workingPolyline.size()-1; i++) {
-            Point p1 = workingPolyline.get(i);
-            Point p2 = workingPolyline.get(i+1);
-            g2.drawLine(p1.x, p1.y, p2.x, p2.y);    
+
+        if (drawTempLine) {
+            g2.setColor(WORKING_LINE_COLOR);
+            Point p = workingPolyline.get(workingPolyline.size() - 1);
+            g2.drawLine(p.x, p.y, workingPoint.x, workingPoint.y);
         }
-        
-        g2.setColor(WORKING_LINE_COLOR);
-        Point p = workingPolyline.get(workingPolyline.size()-1);
-        g2.drawLine(p.x, p.y, workingPoint.x,workingPoint.y);  
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,24 +139,73 @@ public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        switch(evt.getButton()){
+        
+        switch (evt.getButton()) {
             case MouseEvent.BUTTON1:
-                switch (state){
-                    case INIT://forbidden
+                switch (state) {
+                    case INIT:
+                        state = State.UNI;
+                        addPoint(evt.getPoint());
+                        drawPolys = true;
+                        drawTempLine = false;
+                        repaint();
+                        n++;
                         break;
-                    case UNI://forbidden
+                    case UNI:
+                        state = State.POLY;
+                        addPoint(evt.getPoint());
+                        drawPolys = true;
+                        drawTempLine = false;
+                        repaint();
+                        n++;
                         break;
-                    case POLY://forbidden
+                    case POLY:
+                        if (n < 255) {
+                            state = State.POLY;
+                            addPoint(evt.getPoint());
+                            drawPolys = true;
+                            drawTempLine = false;
+                            repaint();
+                            n++;
+                        } else if (n == 255) {
+                            //do nothing
+                            n = n;
+                        }
                         break;
                 }
                 break;
-            case MouseEvent.BUTTON2:
-                switch (state){
-                    case INIT://forbidden
+            case MouseEvent.BUTTON3:
+                switch (state) {
+                    case INIT://do nothing
+                        n = 0;
+                        drawTempLine = false;
+                        drawPolys = false;
+                        repaint();
                         break;
-                    case UNI://forbidden
+                    case UNI://do nothing
+                        n = n;
+                        drawTempLine = false;
+                        drawPolys = false;
+                        repaint();
                         break;
-                    case POLY://forbidden
+                    case POLY:
+                        if (n > 2) {
+                            state = State.POLY;
+                            deleteLastPoint();
+                            workingPoint = evt.getPoint();
+                            drawTempLine = true;
+                            drawPolys = true;
+                            repaint();
+                            n--;
+                        } else if (n <= 2) {
+                            state = State.UNI;
+                            deleteLastPoint();
+                            workingPoint = evt.getPoint();
+                            drawTempLine = true;
+                            drawPolys = true;
+                            repaint();
+                            n = 1;
+                        }
                         break;
                 }
                 break;
@@ -139,26 +213,56 @@ public class Panel_Ex10_ComplexDrawing extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        switch (state){
-            case INIT://forbidden
+        switch (state) {
+            case INIT://do nothing
+                n = 0;
+                drawTempLine = false;
+                repaint();
                 break;
             case UNI:
+                n = n;
+                state = State.UNI;
                 workingPoint = evt.getPoint();
+                drawTempLine = true;
+                drawPolys = true;
+                repaint();
                 break;
             case POLY:
-                workingPoint = evt.getPoint();                
+                n = n;
+                state = State.POLY;
+                workingPoint = evt.getPoint();
+                drawTempLine = true;
+                drawPolys = true;
+                repaint();
                 break;
         }
     }//GEN-LAST:event_formMouseMoved
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        switch (state){
-            case INIT://forbidden
-                break;
-            case UNI://forbidden
-                break;
-            case POLY://forbidden
-                break;
+        if (evt.getKeyCode() == 32) {
+            switch (state) {
+                case INIT://do nothing
+                    n = 0;
+                    drawTempLine = false;
+                    repaint();
+                    break;
+                case UNI:
+                    state = State.INIT;
+                    savePolyline();
+                    drawTempLine = false;
+                    drawPolys = true;
+                    repaint();
+                    n = 0;
+                    break;
+                case POLY:
+                    state = State.INIT;
+                    savePolyline();
+                    drawTempLine = false;
+                    drawPolys = true;
+                    repaint();
+                    n = 0;
+                    break;
+            }
         }
     }//GEN-LAST:event_formKeyPressed
 

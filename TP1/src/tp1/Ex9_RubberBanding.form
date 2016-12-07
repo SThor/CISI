@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="RubberBanding"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -33,7 +34,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="tp1.Panel_Ex9_RubberBanding" name="panel_Ex9_RubberBanding1">
+    <Container class="tp1.PanelEx9RubberBanding" name="panel_Ex9_RubberBanding1">
 
       <Layout>
         <DimensionLayout dim="0">

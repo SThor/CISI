@@ -16,6 +16,7 @@ public class Ex10_ComplexDrawing extends javax.swing.JFrame {
      */
     public Ex10_ComplexDrawing() {
         initComponents();
+        setFocusable(false);
     }
 
     /**
@@ -30,6 +31,9 @@ public class Ex10_ComplexDrawing extends javax.swing.JFrame {
         panel_Ex10_ComplexDrawing1 = new tp1.Panel_Ex10_ComplexDrawing();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Polylines");
+
+        panel_Ex10_ComplexDrawing1.setFocusable(true);
 
         javax.swing.GroupLayout panel_Ex10_ComplexDrawing1Layout = new javax.swing.GroupLayout(panel_Ex10_ComplexDrawing1);
         panel_Ex10_ComplexDrawing1.setLayout(panel_Ex10_ComplexDrawing1Layout);
