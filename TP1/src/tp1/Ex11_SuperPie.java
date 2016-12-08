@@ -31,6 +31,7 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
     public Ex11_SuperPie() {
         initComponents();
         init();
+        percentTextField.requestFocus();
     }
 
     private void init() {
@@ -60,11 +61,11 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
 
     private void showStart() {
         deactivateAll();
-        Utils.activate(stopButton, stopButton, upButton, downButton);
+        Utils.activate(stopButton, stopButton, upButton, downButton, percentTextField);
     }
 
     private void deactivateAll() {
-        Utils.deactivate(startButton, stopButton, upButton, downButton);
+        Utils.deactivate(startButton, stopButton, upButton, downButton, percentTextField);
     }
 
     /**

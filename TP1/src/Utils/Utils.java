@@ -5,7 +5,7 @@
  */
 package Utils;
 
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.Timer;
 
 /**
@@ -14,15 +14,15 @@ import javax.swing.Timer;
  */
 public class Utils {
     
-    public static void activate(JButton ... buttons){
-        for (JButton button : buttons) {
-            button.setEnabled(true);
+    public static void activate(JComponent ... components){
+        for (JComponent component : components) {
+            component.setEnabled(true);
         }
     }
     
-    public static void deactivate(JButton ... buttons){
-        for (JButton button : buttons) {
-            button.setEnabled(false);
+    public static void deactivate(JComponent ... components){
+        for (JComponent component : components) {
+            component.setEnabled(false);
         }
     }
     
