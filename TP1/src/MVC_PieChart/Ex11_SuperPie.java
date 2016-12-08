@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tp1;
+package MVC_PieChart;
 
-import Elements.PieChart;
 import java.awt.Point;
 import Utils.*;
 import java.awt.event.KeyEvent;
@@ -16,11 +15,13 @@ import javax.swing.plaf.basic.BasicArrowButton;
  *
  * @author Silma Thoron
  */
-public class Ex11_SuperPie extends javax.swing.JFrame {
+public class Ex11_SuperPie extends javax.swing.JFrame{
 
     private enum State {
         INIT, NO_DOWN, OK, NO_UP, DOWN, EDITING
     }
+    
+    private Model model = new PercentModel();
 
     private State state;
     private int n;
@@ -31,27 +32,35 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
     public Ex11_SuperPie() {
         initComponents();
         init();
-        percentTextField.requestFocus();
     }
 
     private void init() {
         state = State.INIT;
         showStop();
         n = 0;
+        
+        model.addModelListener(pieChart);
+        model.addModelListener(percentTextField);
+        percentTextField.setModel(model);
+        pieChart.setModel(model);
+        model.setValue(n);
+        percentTextField.requestFocus();
     }
 
     private int enteredPercent() {
-        return Integer.parseInt(percentTextField.getText());
+        int val;
+        try{
+          val = Integer.parseInt(percentTextField.getText());  
+        }catch(NumberFormatException ex){
+            val = 0;
+        }
+        return val;
     }
-
-    private void setValue(int percent) {
-        pieChart.setPercent(percent);
-        percentTextField.setText("" + percent);
-    }
-
-    private void setValue(Point point) {
-        pieChart.setAngle(point);
-        percentTextField.setText("" + pieChart.getPercent());
+    
+    private void setPoint(Point point) {
+        if(pieChart.isPointInCircle(point)){
+            model.setValue(pieChart.pointToPercentage(point));
+        }
     }
 
     private void showStop() {
@@ -59,13 +68,31 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
         Utils.activate(startButton);
     }
 
-    private void showStart() {
+    private void showOK() {
         deactivateAll();
-        Utils.activate(stopButton, stopButton, upButton, downButton, percentTextField);
+        Utils.activate(stopButton, upButton, downButton, percentTextField);
+    }
+    
+    private void showNoUp(){
+        deactivateAll();
+        Utils.activate(stopButton, downButton, percentTextField);
+    }
+    
+    private void showNoDown(){
+        deactivateAll();
+        Utils.activate(stopButton, upButton, percentTextField);        
+    }
+    private void showDown(){
+        deactivateAll();     
+    }
+    
+    private void showEditing(){
+        deactivateAll();
+        Utils.activate(percentTextField);        
     }
 
     private void deactivateAll() {
-        Utils.deactivate(startButton, stopButton, upButton, downButton, percentTextField);
+        Utils.deactivate(stopButton, startButton, upButton, downButton, percentTextField);
     }
 
     /**
@@ -79,9 +106,9 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
 
         mainPanel = new javax.swing.JPanel();
         percentPanel = new javax.swing.JPanel();
-        percentTextField = new javax.swing.JFormattedTextField();
+        percentTextField = new MVC_PieChart.JTextFieldPercent();
         percentLabel = new javax.swing.JLabel();
-        pieChart = new Elements.PieChart();
+        pieChart = new MVC_PieChart.PieChart();
         buttonsPanel = new javax.swing.JPanel();
         upDownPanel = new javax.swing.JPanel();
         upButton = new BasicArrowButton(BasicArrowButton.NORTH);
@@ -95,12 +122,15 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.BorderLayout());
 
-        percentTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
-        percentTextField.setMinimumSize(new java.awt.Dimension(10, 20));
         percentTextField.setPreferredSize(new java.awt.Dimension(40, 20));
+        percentTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                percentTextFieldMouseClicked(evt);
+            }
+        });
         percentTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                percentTextFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                percentTextFieldKeyReleased(evt);
             }
         });
         percentPanel.add(percentTextField);
@@ -190,21 +220,21 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
                 break;
             case NO_DOWN:
                 state = State.OK;
-                showStart();
+                showOK();
                 n = 1;
-                setValue(n);
+                model.setValue(n);
                 break;
             case OK:
                 if (n < 99) {
                     state = State.OK;
-                    showStart();
+                    showOK();
                     n++;
-                    setValue(n);
+                    model.setValue(n);
                 } else if (n >= 99) {
                     state = State.NO_UP;
-                    showStart();
+                    showNoUp();
                     n = 100;
-                    setValue(n);
+                    model.setValue(n);
                 }
                 break;
             case NO_UP: //forbidden
@@ -225,21 +255,21 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
             case OK:
                 if (n <= 1) {
                     state = State.NO_DOWN;
-                    showStart();
+                    showNoDown();
                     n = 0;
-                    setValue(0);
+                    model.setValue(0);
                 } else if (n > 1) {
                     state = State.OK;
-                    showStart();
+                    showOK();
                     n--;
-                    setValue(n);
+                    model.setValue(n);
                 }
                 break;
             case NO_UP:
                 state = State.OK;
-                showStart();
+                showOK();
                 n = 99;
-                setValue(n);
+                model.setValue(n);
                 break;
             case DOWN: //impossible
                 break;
@@ -252,7 +282,7 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
         switch (state) {
             case INIT:
                 state = State.NO_DOWN;
-                showStart();
+                showNoDown();
                 n = 0;
                 // no action
                 break;
@@ -277,19 +307,19 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
                 state = State.INIT;
                 showStop();
                 n = 0;
-                setValue(0);
+                model.setValue(0);
                 break;
             case OK:
                 state = State.INIT;
                 showStop();
                 n = 0;
-                setValue(0);
+                model.setValue(0);
                 break;
             case NO_UP:
                 state = State.INIT;
                 showStop();
                 n = 0;
-                setValue(0);
+                model.setValue(0);
                 break;
             case DOWN: //impossible
                 break;
@@ -304,21 +334,21 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
                 break;
             case NO_DOWN:
                 state = State.DOWN;
-                showStart();
+                showDown();
                 n = n;
-                setValue(evt.getPoint());
+                setPoint(evt.getPoint());
                 break;
             case OK:
                 state = State.DOWN;
-                showStart();
+                showDown();
                 n = n;
-                setValue(evt.getPoint());
+                setPoint(evt.getPoint());
                 break;
             case NO_UP:
                 state = State.DOWN;
-                showStart();
+                showDown();
                 n = n;
-                setValue(evt.getPoint());
+                setPoint(evt.getPoint());
                 break;
             case DOWN: //impossible
                 break;
@@ -339,9 +369,9 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
                 break;
             case DOWN:
                 state = State.DOWN;
-                showStart();
+                showDown();
                 n = pieChart.pointToPercentage(evt.getPoint());
-                setValue(evt.getPoint());
+                setPoint(evt.getPoint());
                 break;
             case EDITING: //impossible
                 break;
@@ -361,19 +391,19 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
             case DOWN:
                 if (n <= 0) {
                     state = State.NO_DOWN;
-                    showStart();
+                    showNoDown();
                     n = 0;
-                    setValue(0);
+                    model.setValue(0);
                 } else if (n > 0 && n < 100) {
                     state = State.OK;
-                    showStart();
+                    showOK();
                     n = n;
-                    setValue(n);
+                    model.setValue(n);
                 } else if (n >= 100) {
                     state = State.NO_UP;
-                    showStart();
+                    showNoUp();
                     n = 100;
-                    setValue(evt.getPoint());
+                    setPoint(evt.getPoint());
                 }
                 break;
             case EDITING: //impossible
@@ -381,7 +411,36 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pieChartMouseReleased
 
-    private void percentTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_percentTextFieldKeyTyped
+    private void percentTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_percentTextFieldMouseClicked
+        switch (state) {
+            case INIT: //forbidden
+                break;
+            case NO_DOWN:
+                state = State.EDITING;
+                showEditing();
+                n = n;
+                break;
+            case OK:
+                state = State.EDITING;
+                showEditing();
+                n = n;
+                break;
+            case NO_UP:
+                state = State.EDITING;
+                showEditing();
+                n = n;
+                break;
+            case DOWN: //forbidden
+                break;
+            case EDITING:
+                state = State.EDITING;
+                showEditing();
+                n = n;
+                break;
+        }
+    }//GEN-LAST:event_percentTextFieldMouseClicked
+
+    private void percentTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_percentTextFieldKeyReleased
         switch (state) {
             case INIT: //forbidden
                 break;
@@ -391,35 +450,37 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
                 break;
             case NO_UP: //forbidden
                 break;
-            case DOWN: // forbidden
+            case DOWN: //forbidden
                 break;
-            case EDITING: //TODO
-                if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
-                    state = State.EDITING;
-                    showStart();
-                    n = enteredPercent();
-                    //no action
-                } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (n <= 0) {
+            case EDITING:
+                if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                    n=enteredPercent();
+                    System.out.println("enter"+n);
+                    if(n<=0){
                         state = State.NO_DOWN;
-                        showStart();
+                        showNoDown();
                         n = 0;
-                        setValue(n);
-                    } else if (n < 100 && n > 0) {
+                        model.setValue(0);
+                    }else if(n<100 && n>0){
                         state = State.OK;
-                        showStart();
-                        n = n;
-                        setValue(n);
-                    } else if (n >= 100) {
+                        showOK();
+                        n = enteredPercent();
+                        model.setValue(n);
+                    }else if(n>=100){
                         state = State.NO_UP;
-                        showStart();
+                        showNoUp();
                         n = 100;
-                        setValue(n);
+                        model.setValue(100);
                     }
+                }else{
+                    state = State.EDITING;
+                    showEditing();
+                    n=enteredPercent();
+                    System.out.println(n);
                 }
                 break;
         }
-    }//GEN-LAST:event_percentTextFieldKeyTyped
+    }//GEN-LAST:event_percentTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -457,8 +518,8 @@ public class Ex11_SuperPie extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel percentLabel;
     private javax.swing.JPanel percentPanel;
-    private javax.swing.JFormattedTextField percentTextField;
-    private Elements.PieChart pieChart;
+    private MVC_PieChart.JTextFieldPercent percentTextField;
+    private MVC_PieChart.PieChart pieChart;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel startStopPanel;
     private javax.swing.JButton stopButton;

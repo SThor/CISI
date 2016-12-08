@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Elements;
+package MVC_PieChart;
 
+import MVC_PieChart.Model;
+import MVC_PieChart.PercentModel;
+import MVC_PieChart.View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,13 +19,14 @@ import javax.swing.JPanel;
  *
  * @author Racim
  */
-public class PieChart extends JPanel{
+public class PieChart extends JPanel implements View{
     private Color colorFilled;
     private Color colorEmpty;
     private final static Color DEFAULT_COLOR_FILLED = Color.ORANGE;
     private final static Color DEFAULT_COLOR_EMPTY = Color.LIGHT_GRAY;
-    private int angle; //degree
     private int percent;
+    
+    private PercentModel model;
 
     public PieChart() {
         this(DEFAULT_COLOR_FILLED, DEFAULT_COLOR_EMPTY);
@@ -48,8 +52,13 @@ public class PieChart extends JPanel{
         g2.fillArc(x, y, diam, diam, 0, computeAngle());
     }
     
+    @Override
+    public void notif(){
+        setPercent(model.getValue());
+    }
+    
     public void setPercent(int percent){
-        this.percent = percent;
+        this.percent = model.getValue();
         repaint();
     }
     
@@ -57,6 +66,10 @@ public class PieChart extends JPanel{
         if(isPointInCircle(point)){
             setPercent(pointToPercentage(point));
         }
+    }
+    
+    public void setModel(Model model){
+        this.model = (PercentModel)model;
     }
     
     public boolean isPointInCircle(Point point) {
